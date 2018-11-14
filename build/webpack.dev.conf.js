@@ -32,7 +32,10 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     // 对一些独立的css文件以及它的预处理文件做一个编译
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+    rules: utils.styleLoaders({
+      sourceMap: config.dev.cssSourceMap,
+      usePostCSS: true
+    })
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
@@ -44,8 +47,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-      ],
+        {
+          from: /.*/,
+          to: path.posix.join(config.dev.assetsPublicPath, 'index.html')
+        }
+      ]
     },
     // 开启热模块加载
     hot: true,
@@ -64,7 +70,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // 启用 Watch 模式。这意味着在初始构建之后，webpack 将继续监听任何已解析文件的更改
     watchOptions: {
       // 通过传递 true 开启 polling，或者指定毫秒为单位进行轮询。默认为false
-      poll: config.dev.poll,
+      poll: config.dev.poll
     }
   },
   plugins: [
@@ -74,6 +80,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
     // 模块热替换它允许在运行时更新各种模块，而无需进行完全刷新
     new webpack.HotModuleReplacementPlugin(),
+
+    // 启用HMR时，此插件将显示模块的相对路径，而不是模块的id
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
 
     // 跳过编译时出错的代码并记录下来，主要作用是使编译后运行时的包不出错
@@ -115,14 +123,20 @@ module.exports = new Promise((resolve, reject) => {
       devWebpackConfig.devServer.port = port
 
       // Add FriendlyErrorsPlugin
-      devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
-        compilationSuccessInfo: {
-          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
-        },
-        onErrors: config.dev.notifyOnErrors
-          ? utils.createNotifierCallback()
-          : undefined
-      }))
+      devWebpackConfig.plugins.push(
+        new FriendlyErrorsPlugin({
+          compilationSuccessInfo: {
+            messages: [
+              `Your application is running here: http://${
+                devWebpackConfig.devServer.host
+              }:${port}`
+            ]
+          },
+          onErrors: config.dev.notifyOnErrors
+            ? utils.createNotifierCallback()
+            : undefined
+        })
+      )
 
       resolve(devWebpackConfig)
     }
