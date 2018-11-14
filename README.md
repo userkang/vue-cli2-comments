@@ -1,6 +1,8 @@
 # vue-cli2.0
 
-> A Vue.js project
+> 这是一个初始化的 vue-cli2.0 项目。
+> 对其中 webpack 的配置做了注释。
+> 共同学习，共同进步。
 
 ## Build Setup
 
