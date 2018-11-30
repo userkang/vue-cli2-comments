@@ -45,9 +45,10 @@ module.exports = {
     path: config.build.assetsRoot,
     filename: '[name].js',
     // 在编译时不知道最终输出文件的 publicPath 路径的情况下，publicPath 可以留空，并且在入口起点文件运行时动态设置。
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath:
+      process.env.NODE_ENV === 'production'
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath
   },
   // 设置模块如何被解析
   resolve: {
@@ -55,8 +56,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     // 创建 import 或 require 的别名，来确保模块引入变得更简单
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      vue$: 'vue/dist/vue.esm.js',
+      '@': resolve('src')
     }
   },
   // 设置如何处理项目中的不同类型的模块
@@ -74,7 +75,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/webpack-dev-server/client')
+        ]
       },
       // 对图片资源文件使用url-loader
       {
